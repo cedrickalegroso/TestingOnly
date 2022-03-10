@@ -19,7 +19,8 @@ namespace Web.Controllers
         // GET: Commissions
         public ActionResult Index()
         {
-            return View(db.Commissions.ToList());
+            var commissions = db.Commissions.Include(c => c.UnitDetail);
+            return View(commissions.ToList());
         }
 
         // GET: Commissions/Details/5
@@ -40,6 +41,7 @@ namespace Web.Controllers
         // GET: Commissions/Create
         public ActionResult Create()
         {
+            ViewBag.UnitSold = new SelectList(db.UnitDetails, "Id", "UnitName");
             return View();
         }
 
@@ -52,14 +54,15 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                ComissionManagerFactory comFactory = new ComissionManagerFactory();
-                IComissionManager commanager = comFactory.GetCommissionManager(commission.UnitSold);
-                commission.CommissionAmount = commanager.GetCommissionAmt();
+                ComissionManagerFactory comManFact = new ComissionManagerFactory();
+                IComissionManager comMan = comManFact.GetCommissionManager(commission.UnitSold);
+                commission.CommissionAmount = comMan.GetCommissionAmt();
                 db.Commissions.Add(commission);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.UnitSold = new SelectList(db.UnitDetails, "Id", "UnitName", commission.UnitSold);
             return View(commission);
         }
 
@@ -75,6 +78,7 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.UnitSold = new SelectList(db.UnitDetails, "Id", "UnitName", commission.UnitSold);
             return View(commission);
         }
 
@@ -91,6 +95,7 @@ namespace Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.UnitSold = new SelectList(db.UnitDetails, "Id", "UnitName", commission.UnitSold);
             return View(commission);
         }
 
