@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CondoDataModelStoreContainer" CdmEntityContainer="CondoDataEntities">
+    <EntitySetMapping Name="Commissions">
+      <EntityTypeMapping TypeName="CondoDataModel.Commission">
+        <MappingFragment StoreEntitySet="Commission">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+          <ScalarProperty Name="AgentNumber" ColumnName="AgentNumber" />
+          <ScalarProperty Name="UnitSold" ColumnName="UnitSold" />
+          <ScalarProperty Name="CommissionAmount" ColumnName="CommissionAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitDetails">
+      <EntityTypeMapping TypeName="CondoDataModel.UnitDetail">
+        <MappingFragment StoreEntitySet="UnitDetail">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="Furnishing" ColumnName="Furnishing" />
+          <ScalarProperty Name="Bedroom" ColumnName="Bedroom" />
+          <ScalarProperty Name="Bath" ColumnName="Bath" />
+          <ScalarProperty Name="FloorArea" ColumnName="FloorArea" />
+          <ScalarProperty Name="Net_Price" ColumnName="Net Price" />
+          <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitTypes">
+      <EntityTypeMapping TypeName="CondoDataModel.UnitType">
+        <MappingFragment StoreEntitySet="UnitType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UnitType1" ColumnName="UnitType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

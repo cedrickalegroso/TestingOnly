@@ -1,0 +1,50 @@
+﻿@model Web.Models.Commission
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Commission</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AgentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AgentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AgentNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AgentNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitDetail.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitDetail.UnitName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommissionAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommissionAmount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

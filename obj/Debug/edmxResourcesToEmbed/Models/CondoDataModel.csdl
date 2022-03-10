@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CondoDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Commission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AgentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UnitSold" Type="Int32" Nullable="false" />
+    <Property Name="CommissionAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="UnitDetail" Relationship="CondoDataModel.FK_Commission_UnitDetail" FromRole="Commission" ToRole="UnitDetail" />
+  </EntityType>
+  <EntityType Name="UnitDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Furnishing" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Bedroom" Type="Int32" Nullable="false" />
+    <Property Name="Bath" Type="Int32" Nullable="false" />
+    <Property Name="FloorArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Net_Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="UnitTypeID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Commissions" Relationship="CondoDataModel.FK_Commission_UnitDetail" FromRole="UnitDetail" ToRole="Commission" />
+    <NavigationProperty Name="UnitType" Relationship="CondoDataModel.FK_UnitDetail_UnitType" FromRole="UnitDetail" ToRole="UnitType" />
+  </EntityType>
+  <EntityType Name="UnitType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UnitType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UnitDetails" Relationship="CondoDataModel.FK_UnitDetail_UnitType" FromRole="UnitType" ToRole="UnitDetail" />
+  </EntityType>
+  <EntityContainer Name="CondoDataEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Commissions" EntityType="Self.Commission" />
+    <EntitySet Name="UnitDetails" EntityType="Self.UnitDetail" />
+    <EntitySet Name="UnitTypes" EntityType="Self.UnitType" />
+    <AssociationSet Name="FK_Commission_UnitDetail" Association="CondoDataModel.FK_Commission_UnitDetail">
+      <End Role="UnitDetail" EntitySet="UnitDetails" />
+      <End Role="Commission" EntitySet="Commissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnitDetail_UnitType" Association="CondoDataModel.FK_UnitDetail_UnitType">
+      <End Role="UnitType" EntitySet="UnitTypes" />
+      <End Role="UnitDetail" EntitySet="UnitDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Commission_UnitDetail">
+    <End Type="CondoDataModel.UnitDetail" Role="UnitDetail" Multiplicity="1" />
+    <End Type="CondoDataModel.Commission" Role="Commission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Commission">
+        <PropertyRef Name="UnitSold" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnitDetail_UnitType">
+    <End Type="CondoDataModel.UnitType" Role="UnitType" Multiplicity="1" />
+    <End Type="CondoDataModel.UnitDetail" Role="UnitDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UnitDetail">
+        <PropertyRef Name="UnitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

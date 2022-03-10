@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CondoDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Commission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AgentName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AgentNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UnitSold" Type="int" Nullable="false" />
+    <Property Name="CommissionAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Furnishing" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Bedroom" Type="int" Nullable="false" />
+    <Property Name="Bath" Type="int" Nullable="false" />
+    <Property Name="FloorArea" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Net Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="UnitTypeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitType" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Commission_UnitDetail">
+    <End Role="UnitDetail" Type="Self.UnitDetail" Multiplicity="1" />
+    <End Role="Commission" Type="Self.Commission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Commission">
+        <PropertyRef Name="UnitSold" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnitDetail_UnitType">
+    <End Role="UnitType" Type="Self.UnitType" Multiplicity="1" />
+    <End Role="UnitDetail" Type="Self.UnitDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UnitDetail">
+        <PropertyRef Name="UnitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CondoDataModelStoreContainer">
+    <EntitySet Name="Commission" EntityType="Self.Commission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitDetail" EntityType="Self.UnitDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitType" EntityType="Self.UnitType" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Commission_UnitDetail" Association="Self.FK_Commission_UnitDetail">
+      <End Role="UnitDetail" EntitySet="UnitDetail" />
+      <End Role="Commission" EntitySet="Commission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnitDetail_UnitType" Association="Self.FK_UnitDetail_UnitType">
+      <End Role="UnitType" EntitySet="UnitType" />
+      <End Role="UnitDetail" EntitySet="UnitDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
